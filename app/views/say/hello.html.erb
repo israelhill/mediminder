@@ -5,7 +5,7 @@
 		<TITLE>Ruby on Rails Starter Application</TITLE>
 		<link href='/stylesheets/style.css' rel='stylesheet'>
 	</HEAD>
- 
+
 	<BODY>
   <div class="container">
     <div class="row">
@@ -29,7 +29,8 @@
             <hr>
             <div class="row">
               <div class="col-lg-4 col-lg-offset-5">
-                <button class="btn btn-primary login-button">Login</button>
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
               </div>
             </div>
           </div>
@@ -39,3 +40,22 @@
   </div>
 	</BODY>
 </HTML>
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+  <!--<title>Facebook Login JavaScript Example</title>-->
+  <!--<meta charset="UTF-8">-->
+<!--</head>-->
+<!--<body>-->
+<!--<script>-->
+<!--</script>-->
+
+<!--&lt;!&ndash;-->
+  <!--Below we include the Login Button social plugin. This button uses-->
+  <!--the JavaScript SDK to present a graphical Login button that triggers-->
+  <!--the FB.login() function when clicked.-->
+<!--&ndash;&gt;-->
+
+<!--</body>-->
+<!--</html>-->
