@@ -1,5 +1,6 @@
 development:
-  adapter: mysql2
+  adapter: mysql
+  url: mysql://bd8237d5967332:c16a02ec@us-cdbr-iron-east-04.cleardb.net:3306/ad_da9a7269cbc3e76?reconnect=true
   database: ad_da9a7269cbc3e76
   host: us-cdbr-iron-east-04.cleardb.net
   port: 3306
