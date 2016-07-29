@@ -15,6 +15,7 @@
 //= require_tree .
 
 
-$(document).ready(function() {
-   Login();
+$(document).ready(function () {
+    Login();
+    FB_AUTH();
 });
