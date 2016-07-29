@@ -1,7 +1,8 @@
 development:
   adapter: mysql2
   database: ad_da9a7269cbc3e76
-  hostname: us-cdbr-iron-east-04.cleardb.net
+  host: us-cdbr-iron-east-04.cleardb.net
+  port: 3306
   username: bd8237d5967332
   password: c16a02ec
   pool: 5
