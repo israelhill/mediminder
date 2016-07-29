@@ -6,4 +6,4 @@ applications:
   name: Drug Reminderer
   host: drug-reminderer
   disk_quota: 1024M
-  service: ClearDB-rails
+  service: ClearDB MySQL Database-6u
