@@ -4,7 +4,7 @@ gem 'twilio-ruby'
 gem 'rails', '~> 3.2.22'
 gem 'redis', '~>3.2'
 gem 'test-unit', '~> 3.0'
-gem 'mysql2', '~> 0.4.3'
+gem 'mysql2', '~> 0.3.18'
 gem 'activerecord-mysql2-adapter'
 gem 'mysql'
 
