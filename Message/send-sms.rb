@@ -51,13 +51,6 @@ def send_frequency_message(drug, phone, frequency)
                                   })
 end
 
-def send_frequency_message(drug, phone, frequency)
-  @client.account.messages.create({ :from => FROM_NUMBER,
-                                    :to => phone,
-                                    :body => 'You usually take your %s medicine %d a day' %[drug, frequency]
-                                  })
-end
-
 def send_side_effect_list_message(drug, sideeffects)
   @client.account.messages.create({ :from => FROM_NUMBER,
                                     :to => phone,
