@@ -6,6 +6,7 @@ gem 'redis', '~>3.2'
 gem 'test-unit', '~> 3.0'
 gem 'mysql2', '~> 0.4.3'
 gem 'activerecord-mysql2-adapter'
+gem 'mysql'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
