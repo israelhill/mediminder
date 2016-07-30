@@ -1,3 +1,3 @@
 class User < ActiveRecord::Base
-  self.table_name = 'users'
+  attr_accessible :email, :first_name, :last_name, :phone, :user_id
 end

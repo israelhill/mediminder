@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  child_id: 1
+  drug_name: MyString
+  should_take_today: false
+  has_taken_today: false
+
+two:
+  user_id: 1
+  child_id: 1
+  drug_name: MyString
+  should_take_today: false
+  has_taken_today: false
