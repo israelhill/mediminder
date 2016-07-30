@@ -1,4 +1,19 @@
 RailsStarter::Application.routes.draw do
+  resources :child_drugs
+
+
+  resources :child_todays
+
+
+  resources :children
+
+
+  resources :drug_infos
+
+
+  resources :users
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
