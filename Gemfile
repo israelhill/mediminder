@@ -4,7 +4,12 @@ gem 'twilio-ruby'
 gem 'rails', '~> 3.2.22'
 gem 'redis', '~>3.2'
 gem 'test-unit', '~> 3.0'
-gem 'sqlite3'
+gem 'sqlite3', :group => [:development, :test]
+
+group :production do
+  gem 'thin'
+  gem 'pg'
+end
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
