@@ -8,6 +8,7 @@ import random
 
 data = subprocess.check_output('curl -X GET --header "Accept: application/json" "https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugmap/drugnames?caseSensitive=false&source=ATC"', shell = True)
 data = json.loads(data)
+sample = random.sample(data['data'], 500)
 affirmation_csv = open("affirmations.csv", "rb")
 negation_csv = open("negations.csv", "rb")
 
@@ -77,7 +78,6 @@ with open("training.csv", 'wb') as outfile:
         writer = csv.writer(outfile, delimiter = ",")
         affirmations(affirmation_csv, writer)
         negations(negation_csv, writer)
-        sample = random.sample(data['data'], 500)
         for item in sample:
             dosage_questions = make_dosage_questions(item)
             frequency_questions = make_frequency_questions(item)
