@@ -21,6 +21,6 @@ $(document).ready(function () {
     $('.dashboard-button').prop('disabled', true);
     FB_AUTH();
     UserForm();
-    $('#calendar').fullCalendar({});
+    Calendar();
 });
 
