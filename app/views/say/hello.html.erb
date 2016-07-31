@@ -10,17 +10,25 @@
         <h1 style="text-align: center">Welcome to Mediminder!</h1>
         <hr>
         <div class="row">
-          <div class="col-lg-6">
-            <h3>
-              Mediminder is an intelligent application that makes
-              sure you take the medications you need, when you need to take them.
+          <div class="col-lg-8 col-lg-offset-2">
+            <h3 style="text-align: center">
+              Mediminder is an intelligent application that combines the web, natural language processing, and
+              your cell phone to make sure you never miss a beat!
             </h3>
+
+            <div class="col-lg-6 col-lg-offset-4">
+              <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="margin-left: 60px">
+              </fb:login-button>
+              <div id="status">
+              </div>
+            </div>
           </div>
         </div>
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
-
-        <div id="status">
+        <hr>
+        <div class="row">
+          <div class="col-lg-6 col-lg-offset-3">
+            <button class="btn btn-primary btn-block dashboard-button">Dashboard</button>
+          </div>
         </div>
       </div>
     </div>
