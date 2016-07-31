@@ -5,6 +5,7 @@ class MessagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => "reply"
 
   def reply
+    boot_twilio
     message_body = params["Body"]
     from_number = params["From"]
     boot_twilio
