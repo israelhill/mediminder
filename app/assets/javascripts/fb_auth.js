@@ -1,5 +1,5 @@
 var FB_AUTH = (function() {
-    // This is called with the results from from FB.getLoginStatus().
+// This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
         console.log('statusChangeCallback');
         console.log(response);
@@ -22,9 +22,9 @@ var FB_AUTH = (function() {
         }
     }
 
-    // This function is called when someone finishes with the Login
-    // Button.  See the onlogin handler attached to it in the sample
-    // code below.
+// This function is called when someone finishes with the Login
+// Button.  See the onlogin handler attached to it in the sample
+// code below.
     function checkLoginState() {
         FB.getLoginStatus(function(response) {
             statusChangeCallback(response);
@@ -33,7 +33,7 @@ var FB_AUTH = (function() {
 
     window.fbAsyncInit = function() {
         FB.init({
-            appId      : '1635183170131190',
+            appId      : '1164752500263550',
             cookie     : true,  // enable cookies to allow the server to access
                                 // the session
             xfbml      : true,  // parse social plugins on this page
@@ -58,7 +58,7 @@ var FB_AUTH = (function() {
 
     };
 
-    // Load the SDK asynchronously
+// Load the SDK asynchronously
     (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
@@ -67,8 +67,8 @@ var FB_AUTH = (function() {
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    // Here we run a very simple test of the Graph API after login is
-    // successful.  See statusChangeCallback() for when this call is made.
+// Here we run a very simple test of the Graph API after login is
+// successful.  See statusChangeCallback() for when this call is made.
     function testAPI() {
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function(response) {
