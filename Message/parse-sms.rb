@@ -55,8 +55,15 @@ def determine_side_effects(drug)
   url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
   data = JSON.parse RestClient.get(url)
   side_effects_string = data['patientEducationSheets'][0]['sideEffects']
-  matching_regex = /'<li>' * '<//li>/'/
-  puts side_effects_string.match(matching_regex)
+  side_effects_array = []
+  matching_regex =/<li>([^<]*)<\/li>/
+  side_effects_string.scan(matching_regex).each { |side_effect|
+    side_effect.join(' ').split(';').each { |parsed_side_effect|
+      if not parsed_side_effect.blank?
+        side_effects_array.push(parsed_side_effect.strip)
+      end
+    }
+  }
+  puts(side_effects_array)
 end
 
-determine_side_effects('ibuprofen')
