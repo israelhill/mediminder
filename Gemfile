@@ -3,8 +3,13 @@ ruby "2.2.3"
 gem 'twilio-ruby'
 gem 'rails', '~> 3.2.22'
 gem 'test-unit', '~> 3.0'
+gem 'mime-types'
+gem 'netrc', '~> 0.11.0'
+gem 'http-cookie', '~> 1.0', '>= 1.0.2'
+gem 'rest-client'
+gem 'json'
 
-gem 'pg'
+gem 'pg', '~> 0.18.4'
 
 
 # Bundle edge Rails instead:
