@@ -16,7 +16,7 @@
 
 
 $(document).ready(function () {
-    Login();
+    $('.dashboard-button').prop('disabled', true);
     FB_AUTH();
     UserForm();
 });
