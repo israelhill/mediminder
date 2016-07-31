@@ -49,10 +49,10 @@ class UsersController < ApplicationController
     puts user_list.to_s
 
     if User.where(:user_id => user[:user_id]).blank?
-      puts 'User does not exist'
+      @user = User.new(params[:user])
+      @user.save
     else
-       @user = User.new(params[:user])
-       @user.save
+       puts 'User already exists'
     end
 
     render nothing: true
