@@ -22,3 +22,5 @@ production:
   timeout: 5000
   host: ec2-23-21-193-140.compute-1.amazonaws.com
   port: 5432
+  username: liwkgmfdfynwqn
+  password: GeYwdQBJGsfsFzmJnNs7mtX0n2
