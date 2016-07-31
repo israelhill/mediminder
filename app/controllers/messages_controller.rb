@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
     sms = @client.account.messages.create(
         from: '+17347864530',
         to: from_number,
-        body: "Hello there, thanks for texting me. Your number is #{from_number}."
+        body: "Hello Wenlu, thanks for texting me. Your number is #{from_number}."
     )
 
   end
