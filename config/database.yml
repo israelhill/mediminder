@@ -20,6 +20,5 @@ production:
   database: postgres
   pool: 5
   timeout: 5000
-  username: israel.hill
-  host: localhost
+  host: ec2-23-21-193-140.compute-1.amazonaws.com
   port: 5432

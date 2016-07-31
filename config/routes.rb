@@ -28,4 +28,5 @@ RailsStarter::Application.routes.draw do
   root :to => 'say#hello'
 
   get '/user_form', to: 'forms#user'
+  get '/dashboard', to: 'dashboard#index'
 end
