@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    render :partial => 'dashboard/dashboard'
+    render :partial => 'layouts/dashboard'
   end
 end
