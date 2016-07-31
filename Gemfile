@@ -8,6 +8,7 @@ gem 'netrc', '~> 0.11.0'
 gem 'http-cookie', '~> 1.0', '>= 1.0.2'
 gem 'rest-client'
 gem 'json'
+gem 'fuzzy-string-match'
 
 gem 'pg', '~> 0.18.4'
 
