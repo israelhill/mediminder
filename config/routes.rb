@@ -29,4 +29,11 @@ RailsStarter::Application.routes.draw do
 
   get '/user_form', to: 'forms#user'
   get '/dashboard', to: 'dashboard#index'
+
+
+  resource :messages do
+    collection do
+      post 'reply'
+    end
+  end
 end
