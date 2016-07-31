@@ -1,16 +1,11 @@
 var Login = (function() {
 
-    console.log("Hello");
-    var submitButton = $('.login-button');
+    var dashBoardButton = $('.dashboard-button');
 
-    function printUsername() {
-        var username = $('.username-field').val();
-        var password = $('.password-field').val();
-        console.log(username + " " + password);
 
-    }
-
-    submitButton.click(function() {
-        printUsername();
+    dashBoardButton.click(function() {
+        FB.api('/me', function(response) {
+            console.log('My Test: ' + response.name + " ID: " + response.id);
+        });
     });
 });
