@@ -10,7 +10,9 @@ gem 'rest-client'
 gem 'json'
 gem 'fuzzy-string-match'
 
-gem 'pg', '~> 0.18.4'
+gem 'pg'
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
 
 
 # Bundle edge Rails instead:

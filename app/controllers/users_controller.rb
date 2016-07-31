@@ -55,7 +55,7 @@ class UsersController < ApplicationController
        puts 'User already exists'
     end
 
-    render nothing: true
+    render partial: 'forms/user'
 
     # respond_to do |format|
     #   if @user.save
