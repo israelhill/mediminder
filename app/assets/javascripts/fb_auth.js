@@ -12,6 +12,8 @@ var FB_AUTH = (function() {
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
             testAPI();
+            $('.dashboard-button').prop('disabled', false);
+            var login = new Login(response);
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +

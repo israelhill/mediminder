@@ -40,17 +40,32 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
+    # puts params[:user]
+    user = params[:user]
+    # user_name = user[:name]
+    # puts user_name
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    user_list = User.all
+    puts user_list.to_s
+
+    if User.where(:user_id => user[:user_id]).blank?
+      @user = User.new(params[:user])
+      @user.save
+    else
+       puts 'User already exists'
     end
+
+    render nothing: true
+
+    # respond_to do |format|
+    #   if @user.save
+    #     format.html { redirect_to @user, notice: 'User was successfully created.' }
+    #     format.json { render json: @user, status: :created, location: @user }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @user.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PUT /users/1
