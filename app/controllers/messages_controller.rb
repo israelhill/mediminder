@@ -263,7 +263,7 @@ class MessagesController < ApplicationController
         end
       }
     }
-    puts "Top 4 side effects: " + side_effects_array[0..3]
+    # puts "Top 4 side effects: " + side_effects_array[0..3]
     return side_effects_array[0..3].to_s
   end
 
