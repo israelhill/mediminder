@@ -138,11 +138,12 @@ class MessagesController < ApplicationController
 
       frequency_row = ChildDrug.where('child_drugs.drug_name = %s AND child_drugs.child_id = %s' % [drug, @messenger.read_attribute('id')])
       @frequency = frequency_row.read_attribute('frequency')
+
+      side_effects = determine_side_effects(drug)
     end
 
     response_type = determine_response_type(response)
     puts 'Response type: ' + response_type
-    side_effects = determine_side_effects(drug)
     dosage = @dosage
     frequency = @frequency
     relationship = @messenger.read_attribute('relation_type')
@@ -196,21 +197,6 @@ class MessagesController < ApplicationController
                                       :body => 'Sorry %s, I didn\'t understand what you were trying to ask. Can you try asking in a different way?' % [name]
                                     })
   end
-
-  def get_drug_array
-    data = RestClient.get('https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugnames?userxcui=false')
-    parsed_data = JSON.parse data
-    drugs_array = []
-    parsed_data['data'].each { |drug|
-      drug.split(/[,,;]/).each { |parsed_drug|
-        if not parsed_drug.blank?
-          drugs_array.push(parsed_drug.strip)
-        end
-      }
-    }
-    return drugs_array
-  end
-
 
   #************************************ PARSE SMS  ********************************************************************
 
