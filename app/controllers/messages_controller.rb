@@ -248,7 +248,7 @@ class MessagesController < ApplicationController
     # cant call this when not on IBM VPN
     url = 'http://bdf0ce88.ngrok.io/'
     data = JSON.parse RestClient.get(url)
-    side_effects_string = @drug_data[drug].to_s
+    side_effects_string = data['patientEducationSheets'][0]['sideEffects']
     side_effects_array = []
     matching_regex =/<li>([^<]*)<\/li>/
     side_effects_string.scan(matching_regex).each { |side_effect|
