@@ -122,7 +122,7 @@ class MessagesController < ApplicationController
 
   def send_response_to_received_message(response, drug_array)
     child_name = @messenger.read_attribute('first_name')
-    parent_name = @parent.read_attribute('first_name')
+    # parent_name = @parent.read_attribute('first_name')
     child_phone_number = @child_phone
     drug = determine_drug(response, drug_array)
 
