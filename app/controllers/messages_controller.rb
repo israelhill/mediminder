@@ -25,7 +25,7 @@ class MessagesController < ApplicationController
   @drug_array = Array.new
 
   def reply
-    @drug_data = JSON.parse(@json_data)
+    @drug_data = JSON(@json_data)
     @drug_data.each do |key, value|
       @drug_array.push key
     end

@@ -11,7 +11,19 @@ require 'fuzzystringmatch'
 # FROM_NUMBER = '+17347864530'
 # TO_NUMBER = '+17343550556'
 
-
+# @json_data = '{
+#       "Acetylcysteine": ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "breathing problems", "chest tightness, pain", "clamminess", "coughing up blood", "fever", "changes in taste", "drowsiness", "mouth sores", "nausea, vomiting", "runny nose"],
+#       "Gentamicin": ["burning, stinging or irritation", "difficulty hearing or ringing in the ears", "dizziness", "increased thirst", "loss of balance", "muscle weakness", "nausea", "pain or difficulty passing urine", "blurred vision (usually temporary)"],
+#       "Ciprofloxacin": ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "blurred vision that does not go away", "temporary blurred vision", "tearing or feeling of something in the eye"]
+#   }'
+#
+# @drug_array = Array.new
+#
+# @drug_data = JSON(@json_data)
+# puts @drug_data
+# @drug_data.each do |key, value|
+#   @drug_array.push key
+# end
 
 
 
