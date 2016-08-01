@@ -110,7 +110,7 @@ class MessagesController < ApplicationController
   def send_side_effect_list_message(drug, sideeffects, phone)
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'The typical side effects of %s are %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects]
+                                      :body => 'The typical side effects of %s are %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects.to_s]
                                     })
   end
 
@@ -180,6 +180,7 @@ class MessagesController < ApplicationController
       when 'side-effects-cause'
         flag = is_side_effect_of_drug(drug, response)
         send_side_effect_cause_message(drug, flag, relationship, child_phone_number)
+
       else
         send_unknown_message_response(child_name, child_phone_number)
     end
@@ -258,7 +259,7 @@ class MessagesController < ApplicationController
       }
     }
     # puts "Top 4 side effects: " + side_effects_array[0..3]
-    return side_effects_array[0..3].to_s
+    return side_effects_array[0..3]
   end
 
   def is_side_effect_of_drug(drug, response)
