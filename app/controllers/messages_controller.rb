@@ -16,11 +16,16 @@ class MessagesController < ApplicationController
   CLASSIFIER_USER_ID = '2c85123b-21d8-4bde-9f35-6c66301ecbf4'
   CLASSIFIER_PASSWORD = 'ObBtjTUN7PfP'
 
+  @json_data = '{
+      "Acetylcysteine": ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "breathing problems", "chest tightness, pain", "clamminess", "coughing up blood", "fever", "changes in taste", "drowsiness", "mouth sores", "nausea, vomiting", "runny nose"],
+      "Gentamicin": ["burning, stinging or irritation", "difficulty hearing or ringing in the ears", "dizziness", "increased thirst", "loss of balance", "muscle weakness", "nausea", "pain or difficulty passing urine", "blurred vision (usually temporary)"],
+      "Ciprofloxacin": ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "blurred vision that does not go away", "temporary blurred vision", "tearing or feeling of something in the eye"]
+  }'
+
   @drug_array = Array.new
 
   def reply
-    f = File.read('demo_drugs.json')
-    @drug_data = JSON.parse(f)
+    @drug_data = JSON.parse(@json_data)
     @drug_data.each do |key, value|
       @drug_array.push key
     end
