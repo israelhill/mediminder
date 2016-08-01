@@ -246,7 +246,7 @@ class MessagesController < ApplicationController
 
   def determine_side_effects(drug)
     # cant call this when not on IBM VPN
-    url = 'http://bdf0ce88.ngrok.io/'
+    url = 'http://bdf0ce88.ngrok.io/' + drug.downcase
     data = JSON.parse RestClient.get(url)
     side_effects_string = data['patientEducationSheets'][0]['sideEffects']
     side_effects_array = []
