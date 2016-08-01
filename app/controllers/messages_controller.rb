@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
     @dosage_list = ChildDrug.find_all_by_child_id @messenger.read_attribute('child_id')
 
     boot_twilio
-    sms = send_response_to_received_message(message_body, get_drug_array)
+    sms = send_response_to_received_message(message_body, Array.new)
 
   end
 
