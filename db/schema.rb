@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160801031119) do
+ActiveRecord::Schema.define(:version => 20160801051617) do
 
   create_table "child_drugs", :force => true do |t|
-    t.integer  "user_id"
+    t.string   "user_id"
     t.integer  "child_id"
     t.string   "drug_name"
     t.string   "amount_left"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20160801031119) do
   end
 
   create_table "child_todays", :force => true do |t|
-    t.integer  "user_id"
+    t.string   "user_id"
     t.integer  "child_id"
     t.string   "drug_name"
     t.boolean  "should_take_today"
