@@ -29,12 +29,19 @@ def send_no_response_message(name, phone, drug)
                                   })
 end
 
-def send_negation_response_message(phone, name)
-  @client.account.messages.create({ :from => FROM_NUMBER,
+def send_negation_response_message(phone, relationship)
+  case relationship
+    when 'mother'
+      @client.account.messages.create({ :from => FROM_NUMBER,
                                     :to => phone,
-                                    :body => 'Your caregiver %s has been notified that you haven\'t taken your medicine yet. They should get back to you as soon as they can.' %[name]
+                                    :body => 'Your mom has been notified that you haven\'t taken your medicine yet. She should get back to you as soon as they can.'
                                   })
-
+    when 'father'
+      @client.account.messages.create({ :from => FROM_NUMBER,
+                                        :to => phone,
+                                        :body => 'Your dad has been notified that you haven\'t taken your medicine yet. He should get back to you as soon as they can.'
+                                      })
+  end
 end
 
 def send_dosage_occurence_message(drug, dosage, phone)
@@ -64,16 +71,16 @@ def send_side_effect_list_message(drug, sideeffects)
                                   })
 end
 
-def send_side_effect_cause_message(drug, flag)
+def send_side_effect_cause_message(drug, flag, relationship)
   if (flag)
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'yes it looks like %s can cause that to happen. If you are experiencing %s ask your caregiver to let your doctor know right away' % [drug]
+                                      :body => 'yes it looks like %s can cause that to happen. If you are experiencing %s ask your %s to let your doctor know right away' % [drug, relationship]
                                     })
   else
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'no %s does not seem to cause that. Talk to your caregiver about visiting the doctor for more help' % [drug]
+                                      :body => 'no %s does not seem to cause that. Talk to your %s about visiting the doctor for more help' % [drug, relationship]
                                     })
 
     end
@@ -98,11 +105,12 @@ def send_response_to_received_message(user_id, child_id, response, drug_array)
   side_effects = determine_side_effects(drug)
   dosage = get_dosage(drug, user_id, child_id)
   frequency = get_frequency(drug, user_id, child_id)
+  relationship = get_relationship(user_id, child_id)
   case responseType
     when 'affirmation'
       send_confirmation(child_name, child_phone_number)
     when 'negation'
-      send_negation_response_message(child_phone_number, parent_name)
+      send_negation_response_message(child_phone_number, relationship)
     when 'dosage-occurence'
       send_dosage_occurence_message(drug, dosage, child_phone_number)
     when 'dosage-daily'
@@ -113,12 +121,12 @@ def send_response_to_received_message(user_id, child_id, response, drug_array)
       send_side_effect_list_message(drug, side_effects)
     when 'side-effects-cause'
       flag = is_side_effect_of_drug(drug, response)
-      send_side_effect_cause_message(drug, flag)
+      send_side_effect_cause_message(drug, flag, relationship)
     when 'calendar-start'
-      start_date = determine_calendar_start_date(child_name, drug)
+      start_date = get_calendar_start_date(child_name, drug)
       send_calendar_start_date(phone, drug, start_date)
     when 'calendar-end'
-      end_date = determine_calendar_end_date(child_name, drug)
+      end_date = get_calendar_end_date(child_name, drug)
       send_calendar_end_date(phone, drug, end_date)
     else
       send_unknown_message_response(child_name, child_phone_number)

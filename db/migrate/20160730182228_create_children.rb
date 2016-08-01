@@ -6,6 +6,7 @@ class CreateChildren < ActiveRecord::Migration
       t.string :last_name
       t.string :child_id
       t.string :phone
+      t.string :relation_type
 
       t.timestamps
     end
