@@ -16,8 +16,12 @@ class MessagesController < ApplicationController
   CLASSIFIER_USER_ID = '2c85123b-21d8-4bde-9f35-6c66301ecbf4'
   CLASSIFIER_PASSWORD = 'ObBtjTUN7PfP'
 
-  file = File.read('/demo_drugs.json')
-  @drug_data = JSON.parse(file)
+  f = File.open("demo_drugs.json", "r")
+  f.each_line do |line|
+    puts line
+  end
+  f.close
+  @drug_data = JSON.parse(f)
 
   @drug_array = Array.new
 
