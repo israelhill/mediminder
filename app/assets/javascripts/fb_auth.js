@@ -13,6 +13,10 @@ var FB_AUTH = (function() {
             // Logged into your app and Facebook.
             testAPI();
             $('.dashboard-button').prop('disabled', false);
+            FB.api('/me', function(response) {
+                console.log('My Test: ' + response.name + " ID: " + response.id);
+                createUser(response);
+            });
             var login = new Login(response);
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
@@ -81,6 +85,24 @@ var FB_AUTH = (function() {
             console.log('Successful login for: ' + response.name);
             document.getElementById('status').innerHTML =
                 'Thanks for logging in, ' + response.name + '!';
+        });
+    }
+
+    function createUser(fbResponseObj) {
+        var firstName = fbResponseObj.name.split(" ")[0];
+        var lastName = fbResponseObj.name.split(" ")[1];
+        $.ajax({
+            url: "/users",
+            type: 'POST',
+            data: {
+                user: {
+                    first_name: firstName,
+                    last_name: lastName,
+                    user_id: fbResponseObj.id
+                }
+            },
+            success: function(data) {
+            }
         });
     }
 });

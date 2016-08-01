@@ -1,3 +1,5 @@
+require 'json'
+
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
@@ -55,17 +57,11 @@ class UsersController < ApplicationController
        puts 'User already exists'
     end
 
-    render partial: 'forms/user'
-
-    # respond_to do |format|
-    #   if @user.save
-    #     format.html { redirect_to @user, notice: 'User was successfully created.' }
-    #     format.json { render json: @user, status: :created, location: @user }
-    #   else
-    #     format.html { render action: "new" }
-    #     format.json { render json: @user.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    puts "User data json: " + user.to_json
+    $user_first_name = user[:first_name]
+    $user_last_name = user[:last_name]
+    $user_id = user[:user_id]
+    render nothing: true
   end
 
   # PUT /users/1
