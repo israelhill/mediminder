@@ -44,6 +44,7 @@ class MessagesController < ApplicationController
     boot_twilio
     sms = send_response_to_received_message(message_body, @drug_array)
 
+    render nothing: true
   end
 
   private
@@ -110,7 +111,7 @@ class MessagesController < ApplicationController
   def send_side_effect_list_message(drug, sideeffects, phone)
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'The typical side effects of %s are %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects[0].to_s]
+                                      :body => 'The typical side effects of %s are %s, %s, and %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects[0], sideeffects[1], sideeffects[2]]
                                     })
   end
 
@@ -249,18 +250,8 @@ class MessagesController < ApplicationController
     # url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
     # data = JSON.parse RestClient.get(url)
     side_effects = @drug_data[drug]
-    side_effects_as_string = @drug_data[drug].to_s
-    side_effects_array = []
-    matching_regex =/<li>([^<]*)<\/li>/
-    side_effects_as_string.scan(matching_regex).each { |side_effect|
-      side_effect.join(' ').split(';').each { |parsed_side_effect|
-        if not parsed_side_effect.blank?
-          side_effects_array.push(parsed_side_effect.strip)
-        end
-      }
-    }
     puts "Top 4 side effects: " + side_effects.to_s
-    return side_effects_array
+    return side_effects
   end
 
   def is_side_effect_of_drug(drug, response)
