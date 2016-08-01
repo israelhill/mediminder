@@ -66,14 +66,16 @@ def determine_side_effects(drug)
   return side_effects_array
 end
 
-def is_side_effect_of_drug(drug, possible_side_effect)
+def is_side_effect_of_drug(drug, response)
   side_effects_array = determine_side_effects(drug)
   jarow = FuzzyStringMatch::JaroWinkler.create( :native )
   side_effects_array.each { |side_effect|
-    score = jarow.getDistance(side_effect, possible_side_effect)
-    if score >= 0.75
-      return TRUE
-    end
+    response.split(/[\s]/).each { |word|
+      score = jarow.getDistance(side_effect, word)
+      if score >= 0.75
+        return TRUE
+      end
+    }
   }
   return FALSE
 end

@@ -29,10 +29,10 @@ def send_no_response_message(name, phone, drug)
                                   })
 end
 
-def send_negation_response_message(phone, caregiverFirstName, caregiverLastName)
+def send_negation_response_message(phone, name)
   @client.account.messages.create({ :from => FROM_NUMBER,
                                     :to => phone,
-                                    :body => 'Your caregiver %s %s has been notified that you haven\'t taken your medicine yet. They should get back to you as soon as they can.' %[caregiverFirstName, caregiverLastName]
+                                    :body => 'Your caregiver %s has been notified that you haven\'t taken your medicine yet. They should get back to you as soon as they can.' %[name]
                                   })
 
 end
@@ -64,16 +64,16 @@ def send_side_effect_list_message(drug, sideeffects)
                                   })
 end
 
-def send_side_effect_cause_message(drug, sideeffect, flag)
+def send_side_effect_cause_message(drug, flag)
   if (flag)
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'yes it looks like %s can cause %s. If you are experiencing %s ask your caregiver to let your doctor know right away' % [drug, sideeffect]
+                                      :body => 'yes it looks like %s can cause that to happen. If you are experiencing %s ask your caregiver to let your doctor know right away' % [drug]
                                     })
   else
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'no %s does not seem to cause %s. Talk to your caregiver about visiting the doctor for more help' % [drug, sideeffect]
+                                      :body => 'no %s does not seem to cause that. Talk to your caregiver about visiting the doctor for more help' % [drug]
                                     })
 
     end
@@ -89,35 +89,39 @@ def send_automatic_message(name, drug, time, phone)
   send_reminder_initial(name, drug, time, dosage, phone)
 end
 
-def send_response_to_received_message(name, drug, response, phone, caregiverFirstName, caregiverLastName)
+def send_response_to_received_message(user_id, child_id, response, drug_array)
+  child_name = get_child_name(user_id, child_id)
+  parent_name = get_name(user_id)
+  child_phone_number = get_child_phone(user_id, child_id)
+  drug = determine_drug(response, drug_array)
   responseType = determine_response_type(response)
   side_effects = determine_side_effects(drug)
-  dosage = determine_dosage(drug, name)
+  dosage = get_dosage(drug, user_id, child_id)
+  frequency = get_frequency(drug, user_id, child_id)
   case responseType
     when 'affirmation'
-      send_confirmation(name, phone)
+      send_confirmation(child_name, child_phone_number)
     when 'negation'
-      send_negation_response_message(phone, caregiverFirstName, caregiverLastName)
+      send_negation_response_message(child_phone_number, parent_name)
     when 'dosage-occurence'
-      send_dosage_occurence_message(drug, dosage, phone)
+      send_dosage_occurence_message(drug, dosage, child_phone_number)
     when 'dosage-daily'
-      send_dosage_daily_message(drug, dosage, phone, frequency)
+      send_dosage_daily_message(drug, dosage, child_phone_number, frequency)
     when 'frequency-number'
-      send_frequency_message(dosage, drug,phone, frequency)
+      send_frequency_message(dosage, drug, child_phone_number, frequency)
     when 'side-effects-list'
       send_side_effect_list_message(drug, side_effects)
     when 'side-effects-cause'
-      possible_side_effect = determine_user_side_effect(response)
-      flag = is_side_effect_of_drug(drug, possible_side_effect)
-      send_side_effect_cause_message(drug, possible_side_effect, flag)
+      flag = is_side_effect_of_drug(drug, response)
+      send_side_effect_cause_message(drug, flag)
     when 'calendar-start'
-      start_date = determine_calendar_start_date(name, drug)
+      start_date = determine_calendar_start_date(child_name, drug)
       send_calendar_start_date(phone, drug, start_date)
     when 'calendar-end'
-      end_date = determine_calednar_end_date(name, drug)
+      end_date = determine_calendar_end_date(child_name, drug)
       send_calendar_end_date(phone, drug, end_date)
     else
-      send_unknown_message_response(name, phone)
+      send_unknown_message_response(child_name, child_phone_number)
   end
 
 
