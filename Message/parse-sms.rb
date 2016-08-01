@@ -42,15 +42,12 @@ def determine_drug(response, drug_array)
   drug_array.each {|drug|
     response.split(/[\s]/).each { |word|
       score = jarow.getDistance(word, drug)
-      if score >= 0.80
+      if score >= 0.90
         return drug
       end
     }}
   return 'drug not found'
 end
-drug_array = get_drug_array
-puts determine_drug('acetylcysteine', drug_array)
-puts determine_drug('guaifenesin', drug_array)
 
 def determine_side_effects(drug)
   url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
