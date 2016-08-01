@@ -110,7 +110,7 @@ class MessagesController < ApplicationController
   def send_side_effect_list_message(drug, sideeffects, phone)
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'The typical side effects of %s are %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects.to_s]
+                                      :body => 'The typical side effects of %s are %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects[0].to_s]
                                     })
   end
 
