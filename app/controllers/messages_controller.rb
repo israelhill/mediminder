@@ -16,6 +16,15 @@ class MessagesController < ApplicationController
   CLASSIFIER_USER_ID = '2c85123b-21d8-4bde-9f35-6c66301ecbf4'
   CLASSIFIER_PASSWORD = 'ObBtjTUN7PfP'
 
+  file = File.read('demo_drugs.json')
+  @drug_data = JSON.parse(file)
+
+  @drug_array = Array.new
+
+  @drug_data.each do |key, value|
+    @drug_array.push key
+  end
+
   def reply
     message_body = params['Body']
     puts 'Message Body: ' + message_body
@@ -29,7 +38,7 @@ class MessagesController < ApplicationController
     @dosage_list = ChildDrug.find_all_by_child_id @messenger.read_attribute('child_id')
 
     boot_twilio
-    sms = send_response_to_received_message(message_body, Array.new)
+    sms = send_response_to_received_message(message_body, @drug_array)
 
   end
 
@@ -234,9 +243,10 @@ class MessagesController < ApplicationController
   end
 
   def determine_side_effects(drug)
-    url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
+    # cant call this when not on IBM VPN
+    # url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
     data = JSON.parse RestClient.get(url)
-    side_effects_string = data['patientEducationSheets'][0]['sideEffects']
+    side_effects_string = @drug_data[drug]
     side_effects_array = []
     matching_regex =/<li>([^<]*)<\/li>/
     side_effects_string.scan(matching_regex).each { |side_effect|
