@@ -16,13 +16,6 @@ class MessagesController < ApplicationController
   CLASSIFIER_USER_ID = '2c85123b-21d8-4bde-9f35-6c66301ecbf4'
   CLASSIFIER_PASSWORD = 'ObBtjTUN7PfP'
 
-  f = File.open("demo_drugs.json", "r")
-  f.each_line do |line|
-    puts line
-  end
-  f.close
-  @drug_data = JSON.parse(f)
-
   @drug_array = Array.new
 
   @drug_data.each do |key, value|
@@ -30,6 +23,8 @@ class MessagesController < ApplicationController
   end
 
   def reply
+    f = File.read('demo_drugs.json')
+    @drug_data = JSON.parse(f)
     message_body = params['Body']
     puts 'Message Body: ' + message_body
     @child_number = params['From']
