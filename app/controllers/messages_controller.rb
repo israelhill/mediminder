@@ -11,6 +11,11 @@ class MessagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => "reply"
   FROM_NUMBER = '+16503833589'
 
+  # CLASSIFIER STUFF
+  CLASSIFIER_ID = '341781x90-nlc-704'
+  CLASSIFIER_USER_ID = '2c85123b-21d8-4bde-9f35-6c66301ecbf4'
+  CLASSIFIER_PASSWORD = 'ObBtjTUN7PfP'
+
   def reply
     message_body = params['Body']
     puts 'Message Body: ' + message_body
