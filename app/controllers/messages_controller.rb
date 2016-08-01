@@ -18,8 +18,8 @@ class MessagesController < ApplicationController
 
   private
   def boot_twilio
-    account_sid = 'ACee177252e5f1e4a5c4c19b8e1e10d5d9'
-    auth_token = '92760c86abd82c59035d16709b99ee8c'
+    account_sid = 'ACa781815d12f352a8c5d748c1c816c16b'
+    auth_token = 'a65631733202260ddeb4874331c94bcc'
     @client = Twilio::REST::Client.new account_sid, auth_token
   end
 
