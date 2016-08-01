@@ -252,7 +252,7 @@ class MessagesController < ApplicationController
   def determine_side_effects(drug)
     # cant call this when not on IBM VPN
     # url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
-    data = JSON.parse RestClient.get(url)
+    # data = JSON.parse RestClient.get(url)
     side_effects_string = @drug_data[drug]
     side_effects_array = []
     matching_regex =/<li>([^<]*)<\/li>/
