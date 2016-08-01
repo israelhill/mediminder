@@ -26,6 +26,5 @@ class SayController < ApplicationController
         end
       end
     @env = env
-    
   end
 end

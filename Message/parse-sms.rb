@@ -43,7 +43,6 @@ def determine_drug(response, drug_array)
     response.split(/[\s]/).each { |word|
       score = jarow.getDistance(word, drug)
       if score >= 0.80
-        puts drug
         return drug
       end
     }}
@@ -55,8 +54,28 @@ def determine_side_effects(drug)
   url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
   data = JSON.parse RestClient.get(url)
   side_effects_string = data['patientEducationSheets'][0]['sideEffects']
-  matching_regex = /'<li>' * '<//li>/'/
-  puts side_effects_string.match(matching_regex)
+  side_effects_array = []
+  matching_regex =/<li>([^<]*)<\/li>/
+  side_effects_string.scan(matching_regex).each { |side_effect|
+    side_effect.join(' ').split(';').each { |parsed_side_effect|
+      if not parsed_side_effect.blank?
+        side_effects_array.push(parsed_side_effect.strip)
+      end
+    }
+  }
+  return side_effects_array
 end
 
-determine_side_effects('ibuprofen')
+def is_side_effect_of_drug(drug, response)
+  side_effects_array = determine_side_effects(drug)
+  jarow = FuzzyStringMatch::JaroWinkler.create( :native )
+  side_effects_array.each { |side_effect|
+    response.split(/[\s]/).each { |word|
+      score = jarow.getDistance(side_effect, word)
+      if score >= 0.75
+        return TRUE
+      end
+    }
+  }
+  return FALSE
+end

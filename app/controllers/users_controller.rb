@@ -91,4 +91,9 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def get_full_name(user_id)
+    user = User.find_by_user_id(user_id)
+    return user.first_name + ' ' + user.last_name
+  end
 end
