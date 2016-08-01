@@ -259,7 +259,7 @@ class MessagesController < ApplicationController
       }
     }
     # puts "Top 4 side effects: " + side_effects_array[0..3]
-    return side_effects_array[0..3]
+    return side_effects_array
   end
 
   def is_side_effect_of_drug(drug, response)
