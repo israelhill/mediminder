@@ -7,5 +7,6 @@ class FormsController < ApplicationController
   def user
     # use params[:name] to get request parameter value by name
     # @parameter = params[:name]
+    render partial: 'forms/user'
   end
 end

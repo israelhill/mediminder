@@ -26,7 +26,7 @@
         <hr>
         <div class="row">
           <div class="col-lg-6 col-lg-offset-3">
-            <button class="btn btn-primary btn-block dashboard-button">Dashboard</button>
+            <%= button_to 'Dashboard', dashboard_url, params: {:first_name => $user_first_name,  :last_name => $user_last_name, :user_id => $user_id}, method: 'get', class: 'btn btn-primary btn-block' %>
           </div>
         </div>
       </div>

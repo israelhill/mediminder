@@ -1,14 +1,17 @@
 var Login = function(response) {
 
     var dashBoardButton = $('.dashboard-button');
+    var firstName;
+    var lastName;
+    var userID;
 
 
     dashBoardButton.click(function() {
-        FB.api('/me', function(response) {
-            console.log('My Test: ' + response.name + " ID: " + response.id);
-            createUser(response);
-        });
         console.log("Testing datapassing: "  + response.name);
+        //FB.api('/me', function(response) {
+        //    console.log('My Test: ' + response.name + " ID: " + response.id);
+        //    createUser(response);
+        //});
     });
 
     function createUser(fbResponseObj) {
@@ -23,6 +26,12 @@ var Login = function(response) {
                     last_name: lastName,
                     user_id: fbResponseObj.id
                 }
+            },
+            success: function(data) {
+                console.log("Success: " + data.first_name);
+                firstName = data.first_name;
+                lastName = data.last_name;
+                userID = data.user_id;
             }
         });
     }
