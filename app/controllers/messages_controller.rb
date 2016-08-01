@@ -20,16 +20,16 @@ class MessagesController < ApplicationController
 
   def reply
 
-    @drug_acet = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "breathing problems", "chest tightness, pain", "clamminess", "coughing up blood", "fever", "changes in taste", "drowsiness", "mouth sores", "nausea, vomiting", "runny nose"]
-    @drug_gent = ["burning, stinging or irritation", "difficulty hearing or ringing in the ears", "dizziness", "increased thirst", "loss of balance", "muscle weakness", "nausea", "pain or difficulty passing urine", "blurred vision (usually temporary)"]
-    @drug_cip = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "blurred vision that does not go away", "temporary blurred vision", "tearing or feeling of something in the eye"]
+    #@drug_acet = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "breathing problems", "chest tightness, pain", "clamminess", "coughing up blood", "fever", "changes in taste", "drowsiness", "mouth sores", "nausea, vomiting", "runny nose"]
+    #@drug_gent = ["burning, stinging or irritation", "difficulty hearing or ringing in the ears", "dizziness", "increased thirst", "loss of balance", "muscle weakness", "nausea", "pain or difficulty passing urine", "blurred vision (usually temporary)"]
+    #@drug_cip = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "blurred vision that does not go away", "temporary blurred vision", "tearing or feeling of something in the eye"]
 
-    @drug_data = Hash["Acetylcysteine", @drug_acet, "Gentamicin", @drug_gent, "Ciprofloxacin", @drug_cip]
+    #@drug_data = Hash["Acetylcysteine", @drug_acet, "Gentamicin", @drug_gent, "Ciprofloxacin", @drug_cip]
 
-    @drug_array = Array.new
-    @drug_data.each do |key, value|
-      @drug_array.push key
-    end
+    @drug_array = get_drug_array()
+    #@drug_data.each do |key, value|
+    #  @drug_array.push key
+    #end
     message_body = params['Body']
     puts 'Message Body: ' + message_body
     @child_number = params['From']
@@ -220,7 +220,7 @@ class MessagesController < ApplicationController
   end
 
   def get_drug_array
-    data = RestClient.get('https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugnames?userxcui=false')
+    data = RestClient.get('http://bdf0ce88.ngrok.io/')
     parsed_data = JSON.parse data
     drugs_array = []
     parsed_data['data'].each { |drug|
@@ -247,11 +247,20 @@ class MessagesController < ApplicationController
 
   def determine_side_effects(drug)
     # cant call this when not on IBM VPN
-    # url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
-    # data = JSON.parse RestClient.get(url)
-    side_effects = @drug_data[drug]
-    puts "Top 4 side effects: " + side_effects.to_s
-    return side_effects
+    url = 'http://bdf0ce88.ngrok.io/' + drug.downcase
+    data = JSON.parse RestClient.get(url)
+    side_effects_string = data['patientEducationSheets'][0]['sideEffects']
+    side_effects_array = []
+    matching_regex =/<li>([^<]*)<\/li>/
+    side_effects_string.scan(matching_regex).each { |side_effect|
+      side_effect.join(' ').split(';').each { |parsed_side_effect|
+        if not parsed_side_effect.blank?
+          side_effects_array.push(parsed_side_effect.strip)
+        end
+      }
+    }
+    # puts "Top 4 side effects: " + side_effects_array[0..3]
+    return side_effects_array
   end
 
   def is_side_effect_of_drug(drug, response)
