@@ -107,14 +107,14 @@ class MessagesController < ApplicationController
                                     })
   end
 
-  def send_side_effect_list_message(drug, sideeffects)
+  def send_side_effect_list_message(drug, sideeffects, phone)
     @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
                                       :body => 'The typical side effects of %s are %s. If you are experiencing any of these symptoms, tell your caregiver right away' %[drug, sideeffects]
                                     })
   end
 
-  def send_side_effect_cause_message(drug, flag, relationship)
+  def send_side_effect_cause_message(drug, flag, relationship, phone)
     if (flag)
       @client.account.messages.create({ :from => FROM_NUMBER,
                                         :to => phone,
@@ -176,16 +176,10 @@ class MessagesController < ApplicationController
       when 'frequency-number'
         send_frequency_message(dosage, drug, child_phone_number, frequency)
       when 'side-effects-list'
-        send_side_effect_list_message(drug, side_effects)
+        send_side_effect_list_message(drug, side_effects, child_phone_number)
       when 'side-effects-cause'
         flag = is_side_effect_of_drug(drug, response)
-        send_side_effect_cause_message(drug, flag, relationship)
-      when 'calendar-start'
-        start_date = get_calendar_start_date(child_name, drug)
-        send_calendar_start_date(phone, drug, start_date)
-      when 'calendar-end'
-        end_date = get_calendar_end_date(child_name, drug)
-        send_calendar_end_date(phone, drug, end_date)
+        send_side_effect_cause_message(drug, flag, relationship, child_phone_number)
       else
         send_unknown_message_response(child_name, child_phone_number)
     end
