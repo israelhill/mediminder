@@ -4,6 +4,7 @@ require 'rest-client'
 require 'json'
 require 'active_record'
 require 'fuzzystringmatch'
+require '../../Message/parse-sms'
 
 class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
