@@ -31,12 +31,12 @@ end
 
 def send_negation_response_message(phone, relationship)
   case relationship
-    when 'mother'
+    when 'Mother'
       @client.account.messages.create({ :from => FROM_NUMBER,
                                     :to => phone,
                                     :body => 'Your mom has been notified that you haven\'t taken your medicine yet. She should get back to you as soon as they can.'
                                   })
-    when 'father'
+    when 'Father'
       @client.account.messages.create({ :from => FROM_NUMBER,
                                         :to => phone,
                                         :body => 'Your dad has been notified that you haven\'t taken your medicine yet. He should get back to you as soon as they can.'
