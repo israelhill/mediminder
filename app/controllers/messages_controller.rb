@@ -253,7 +253,7 @@ class MessagesController < ApplicationController
     # cant call this when not on IBM VPN
     # url = 'https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugs/' + drug.downcase + '?includeFilter=PatientEducation&pediatric=false'
     # data = JSON.parse RestClient.get(url)
-    side_effects_string = @drug_data[drug]
+    side_effects_string = @drug_data[drug].to_s
     side_effects_array = []
     matching_regex =/<li>([^<]*)<\/li>/
     side_effects_string.scan(matching_regex).each { |side_effect|
@@ -264,7 +264,7 @@ class MessagesController < ApplicationController
       }
     }
     puts "Top 4 side effects: " + side_effects_array[0..3]
-    return side_effects_array[0..3]
+    return side_effects_array[0..3].to_s
   end
 
   def is_side_effect_of_drug(drug, response)
