@@ -16,6 +16,8 @@ class MessagesController < ApplicationController
   CLASSIFIER_USER_ID = '2c85123b-21d8-4bde-9f35-6c66301ecbf4'
   CLASSIFIER_PASSWORD = 'ObBtjTUN7PfP'
 
+  @dosage = 1
+
   def reply
 
     @drug_acet = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "breathing problems", "chest tightness, pain", "clamminess", "coughing up blood", "fever", "changes in taste", "drowsiness", "mouth sores", "nausea, vomiting", "runny nose"]
@@ -143,12 +145,15 @@ class MessagesController < ApplicationController
     child_phone_number = @child_phone
     drug = determine_drug(response, drug_array)
 
-    if drug != 'drug not found'
-      dosage_row = ChildDrug.where('child_drugs.drug_name = %s AND child_drugs.child_id = %s' % [drug, @messenger.read_attribute('id')])
-      @dosage = dosage_row.read_attribute('dosage')
 
-      frequency_row = ChildDrug.where('child_drugs.drug_name = %s AND child_drugs.child_id = %s' % [drug, @messenger.read_attribute('id')])
-      @frequency = frequency_row.read_attribute('frequency')
+    if drug != 'drug not found'
+      child_drugs = ChildDrug.find_all_by_child_id(@messenger.read_attribute('id'))
+      child_drugs.each do |d|
+        if d.read_attribute('drug_name').eql? drug
+          @dosage = d.read_attribute('dosage')
+          @frequency = d.read_attribute('frequency')
+        end
+      end
 
       side_effects = determine_side_effects(drug)
     end
