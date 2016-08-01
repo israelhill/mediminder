@@ -83,11 +83,13 @@ var UserForm = (function() {
         childLastName = $('.child-last-name').val();
         childPhone = $('.child-phone').val();
         relationshipType = $('.relationship-type-button').html().split(' ')[0];
+        console.log(relationshipType);
 
         childObj = {
             childFirstName: childFirstName,
             childLastName: childLastName,
-            childPhone: childPhone
+            childPhone: childPhone,
+            relationType: relationshipType
         };
     }
 
