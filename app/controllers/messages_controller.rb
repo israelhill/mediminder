@@ -18,13 +18,12 @@ class MessagesController < ApplicationController
 
   @drug_array = Array.new
 
-  @drug_data.each do |key, value|
-    @drug_array.push key
-  end
-
   def reply
     f = File.read('demo_drugs.json')
     @drug_data = JSON.parse(f)
+    @drug_data.each do |key, value|
+      @drug_array.push key
+    end
     message_body = params['Body']
     puts 'Message Body: ' + message_body
     @child_number = params['From']
