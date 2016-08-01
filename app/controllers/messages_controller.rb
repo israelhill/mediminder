@@ -3,6 +3,7 @@ require 'twilio-ruby'
 class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :authenticate_user!, :only => "reply"
+  FROM_NUMBER = '+16503833589'
 
   def reply
     message_body = params['Body']
