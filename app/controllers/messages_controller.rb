@@ -220,7 +220,7 @@ class MessagesController < ApplicationController
   end
 
   def get_drug_array
-    data = RestClient.get('http://bdf0ce88.ngrok.io/')
+    data = RestClient.get('http://b74edd07.ngrok.io/')
     parsed_data = JSON.parse data
     drugs_array = []
     parsed_data['data'].each { |drug|
