@@ -6,19 +6,15 @@ class MessagesController < ApplicationController
 
   def reply
     message_body = params['Body']
-    from_number = params['From']
+    @child_number = params['From']
 
-    @messenger = Child.find_by_phone from_number[2..-1]
+    @messenger = Child.find_by_phone @child_number[2..-1]
     @parent = @messenger.read_attribute('user_id')
-    @child_phone = from_number
+    @child_phone = @child_number
     @dosage_list = ChildDrug.find_all_by_child_id @messenger.read_attribute('child_id')
 
     boot_twilio
-    sms = @client.account.messages.create(
-        from: '+16503833589',
-        to: from_number,
-        body: "Hello Wenlu, thanks for texting me. Your number is #{from_number}."
-    )
+    send_response_to_received_message(message_body, get_drug_array)
 
   end
 
@@ -115,24 +111,27 @@ class MessagesController < ApplicationController
     send_reminder_initial(name, drug, time, dosage, phone)
   end
 
-  def send_response_to_received_message(user_id, child_id, response, drug_array)
+  def send_response_to_received_message(response, drug_array)
     child_name = @messenger.read_attribute('first_name')
     parent_name = @parent.read_attribute('first_name')
     child_phone_number = @child_phone
     drug = determine_drug(response, drug_array)
-    if (drug != 'drug not found')
-      @dosage = ChildDrug.where('child_drugs.drug_name = %s' % [drug.r])
-      @dosage = @dosage_list.each do |drug|
-      if drug.read_attribute('drug_name').equal? drug
-      end
-      end
+
+    if drug != 'drug not found'
+      dosage_row = ChildDrug.where('child_drugs.drug_name = %s AND child_drugs.child_id = %s' % [drug, @messenger.read_attribute('id')])
+      @dosage = dosage_row.read_attribute('dosage')
+
+      frequency_row = ChildDrug.where('child_drugs.drug_name = %s AND child_drugs.child_id = %s' % [drug, @messenger.read_attribute('id')])
+      @frequency = frequency_row.read_attribute('frequency')
     end
-    responseType = determine_response_type(response)
+
+    response_type = determine_response_type(response)
     side_effects = determine_side_effects(drug)
-    dosage = get_dosage(drug, user_id, child_id)
-    frequency = get_frequency(drug, user_id, child_id)
-    relationship = get_relationship(user_id, child_id)
-    case responseType
+    dosage = @dosage
+    frequency = @frequency
+    relationship = @messenger.read_attribute('relation_type')
+
+    case response_type
       when 'affirmation'
         send_confirmation(child_name, child_phone_number)
       when 'negation'
