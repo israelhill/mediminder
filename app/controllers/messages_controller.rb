@@ -1,4 +1,9 @@
 require 'twilio-ruby'
+require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+require 'rest-client'
+require 'json'
+require 'active_record'
+require 'fuzzystringmatch'
 
 class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
@@ -7,9 +12,12 @@ class MessagesController < ApplicationController
 
   def reply
     message_body = params['Body']
+    puts 'Message Body: ' + message_body
     @child_number = params['From']
 
     @messenger = Child.find_by_phone @child_number[2..-1]
+    puts 'Child Phone number: ' + @child_number[2..-1]
+
     @parent = @messenger.read_attribute('user_id')
     @child_phone = @child_number
     @dosage_list = ChildDrug.find_all_by_child_id @messenger.read_attribute('child_id')
@@ -127,6 +135,7 @@ class MessagesController < ApplicationController
     end
 
     response_type = determine_response_type(response)
+    puts 'Response type: ' + response_type
     side_effects = determine_side_effects(drug)
     dosage = @dosage
     frequency = @frequency
@@ -180,5 +189,19 @@ class MessagesController < ApplicationController
                                       :to => phone,
                                       :body => 'Sorry %s, I didn\'t understand what you were trying to ask. Can you try asking in a different way?' % [name]
                                     })
+  end
+
+  def get_drug_array
+    data = RestClient.get('https://watsonpow01.rch.stglabs.ibm.com/services/drug-info/api/v1/drugdetail/drugnames?userxcui=false')
+    parsed_data = JSON.parse data
+    drugs_array = []
+    parsed_data['data'].each { |drug|
+      drug.split(/[,,;]/).each { |parsed_drug|
+        if not parsed_drug.blank?
+          drugs_array.push(parsed_drug.strip)
+        end
+      }
+    }
+    return drugs_array
   end
 end
