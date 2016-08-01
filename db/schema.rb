@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160730182621) do
+ActiveRecord::Schema.define(:version => 20160801031119) do
 
   create_table "child_drugs", :force => true do |t|
     t.integer  "user_id"
@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(:version => 20160730182621) do
     t.string   "last_name"
     t.string   "child_id"
     t.string   "phone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "relation_type"
   end
 
   add_index "children", ["child_id"], :name => "index_children_on_child_id"
