@@ -120,11 +120,11 @@ class MessagesController < ApplicationController
     parent_name = @parent.read_attribute('first_name')
     child_phone_number = @child_phone
     drug = determine_drug(response, drug_array)
-
-    @dosage = ChildDrug.where('child_drugs.drug_name = %s' % [drug.r])
-
-    @dosage = @dosage_list.each do |drug|
+    if (drug != 'drug not found')
+      @dosage = ChildDrug.where('child_drugs.drug_name = %s' % [drug.r])
+      @dosage = @dosage_list.each do |drug|
       if drug.read_attribute('drug_name').equal? drug
+      end
       end
     end
     responseType = determine_response_type(response)
