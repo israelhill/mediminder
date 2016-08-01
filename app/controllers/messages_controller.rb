@@ -7,6 +7,12 @@ class MessagesController < ApplicationController
   def reply
     message_body = params['Body']
     from_number = params['From']
+
+    @messenger = Child.find_by_phone from_number[2..-1]
+    @parent = @messenger.read_attribute('user_id')
+    @child_phone = from_number
+    @dosage_list = ChildDrug.find_all_by_child_id @messenger.read_attribute('child_id')
+
     boot_twilio
     sms = @client.account.messages.create(
         from: '+16503833589',
@@ -110,10 +116,17 @@ class MessagesController < ApplicationController
   end
 
   def send_response_to_received_message(user_id, child_id, response, drug_array)
-    child_name = get_child_name(user_id, child_id)
-    parent_name = get_name(user_id)
-    child_phone_number = get_child_phone(user_id, child_id)
+    child_name = @messenger.read_attribute('first_name')
+    parent_name = @parent.read_attribute('first_name')
+    child_phone_number = @child_phone
     drug = determine_drug(response, drug_array)
+
+    @dosage = ChildDrug.where('child_drugs.drug_name = %s' % [drug.r])
+
+    @dosage = @dosage_list.each do |drug|
+      if drug.read_attribute('drug_name').equal? drug
+      end
+    end
     responseType = determine_response_type(response)
     side_effects = determine_side_effects(drug)
     dosage = get_dosage(drug, user_id, child_id)
