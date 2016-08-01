@@ -12,7 +12,10 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <div class="container user-form" id="user-form">
+
+<%= render partial: 'layouts/navbar' %>
+<br><br>
+<div class="container user-form" id="user-form">
     <div class="row">
       <div class="col-lg-12">
         <div class="panel panel-success">
@@ -56,6 +59,16 @@
               <div class="col-lg-6">
                 <input class="form-control child-phone" type="text" placeholder="Phone Number">
               </div>
+              <div class="col-lg-6">
+                <div class="dropdown">
+                  <button class="btn btn-primary btn-block dropdown-toggle relationship-type-button" type="button" data-toggle="dropdown">Dropdown Example
+                    <span class="caret"></span></button>
+                  <ul class="dropdown-menu relationship-ul">
+                    <li class="relationship"><a>Mother</a></li>
+                    <li class="relationship"><a>Father</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <hr>
             <h3>Drug Information:</h3>
@@ -70,7 +83,7 @@
             <br>
             <div class="row">
               <div class="col-lg-6 pull-right">
-                Time Of Day Here!
+                <%= render 'layouts/time_list', :drug_id => 'drugFreqList1' %>
               </div>
               <div class="col-lg-6 pull-left">
                 <input class="form-control drug-1-freq" type="number" placeholder="Frequency">
@@ -88,7 +101,7 @@
             <br>
             <div class="row">
               <div class="col-lg-6 pull-right">
-                Time Of Day Here!
+                <%= render 'layouts/time_list', :drug_id => 'drugFreqList2' %>
               </div>
               <div class="col-lg-6 pull-left">
                 <input class="form-control drug-2-freq" type="number" placeholder="Frequency">
@@ -106,7 +119,7 @@
             <br>
             <div class="row">
               <div class="col-lg-6 pull-right">
-                Time Of Day Here!
+                <%= render 'layouts/time_list', :drug_id => 'drugFreqList3' %>
               </div>
               <div class="col-lg-6 pull-left">
                 <input class="form-control drug-3-freq" type="number" placeholder="Frequency">
@@ -126,10 +139,6 @@
 
 
 <style>
-  .user-form {
-    padding-top: 150px;
-  }
-
     body, html {
       background-color: #3b4b54; width : 100%;
     }
