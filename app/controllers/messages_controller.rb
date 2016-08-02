@@ -9,7 +9,7 @@ require 'fuzzystringmatch'
 class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :authenticate_user!, :only => "reply"
-  FROM_NUMBER = '+16503833589'
+  FROM_NUMBER = '+17347864530'
 
   # CLASSIFIER STUFF
   CLASSIFIER_ID = '341781x90-nlc-704'
@@ -57,8 +57,8 @@ class MessagesController < ApplicationController
 
   private
   def boot_twilio
-    account_sid = 'ACa781815d12f352a8c5d748c1c816c16b'
-    auth_token = 'a65631733202260ddeb4874331c94bcc'
+    account_sid = 'PN68e053fd7ea3756274a6ff6f0b2bfb5a'
+    auth_token = '92760c86abd82c59035d16709b99ee8c'
     @client = Twilio::REST::Client.new account_sid, auth_token
   end
 
@@ -134,12 +134,12 @@ class MessagesController < ApplicationController
 
   def send_auto_reminder_message(name, drug, phone)
     dosage = determine_dosage(drug, name)
-    send_reminder_initial(name, drug, time, dosage, phone)
+    send_reminder_initial(name, drug, time, phone)
   end
 
   def send_automatic_message(name, drug, time, phone)
     dosage = determine_dosage(drug, name)
-    send_reminder_initial(name, drug, time, dosage, phone)
+    send_reminder_initial(name, drug, time, phone)
   end
 
   def send_response_to_received_message(response, drug_array)
