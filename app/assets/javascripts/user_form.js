@@ -40,6 +40,8 @@ var UserForm = (function() {
         createDrugObject_2();
         createDrugObject_3();
         sendFormData();
+
+        window.location.replace('https://mediminder.herokuapp.com/dashboard');
     });
 
     $('.relationship-ul li').click(function(){

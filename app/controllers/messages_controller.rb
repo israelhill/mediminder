@@ -47,17 +47,17 @@ class MessagesController < ApplicationController
     render nothing: true
   end
 
+  def send_reminder_initial(name, drug, dosage, phone)
+    @client.account.messages.create({ :from => FROM_NUMBER,
+                                      :to => phone,
+                                      :body => 'Hey %s! This is a Mediminder that you need to take your %s medication. Please take your usual %d pills in the next few minutes and send us a response when you do. Have a great day!' % [name, drug, dosage]})
+  end
+
   private
   def boot_twilio
     account_sid = 'ACa781815d12f352a8c5d748c1c816c16b'
     auth_token = 'a65631733202260ddeb4874331c94bcc'
     @client = Twilio::REST::Client.new account_sid, auth_token
-  end
-
-  def send_reminder_initial(name, drug, time, dosage, phone)
-    @client.account.messages.create({ :from => FROM_NUMBER,
-                                      :to => phone,
-                                      :body => 'Hey %s! This is a MediMinder reminder that you need to take your %s medication. Please take your usual %d pills of %s in the next few minutes and send us a response when you do. Have a great day!' % [name, dosage, time, drug]})
   end
 
   def send_confirmation(name, phone)
@@ -119,7 +119,7 @@ class MessagesController < ApplicationController
     if (flag)
       @client.account.messages.create({ :from => FROM_NUMBER,
                                         :to => phone,
-                                        :body => 'yes it looks like %s can cause that to happen. If you are experiencing %s ask your %s to let your doctor know right away' % [drug, relationship]
+                                        :body => 'yes it looks like %s can cause that to happen. If you are experiencing this ask your %s to let your doctor know right away' % [drug, relationship]
                                       })
     else
       @client.account.messages.create({ :from => FROM_NUMBER,

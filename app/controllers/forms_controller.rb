@@ -12,6 +12,7 @@ class FormsController < ApplicationController
   end
 
   def form_data
+    @messenger = MessagesController.new
     puts params
     user_object = params[:user]
     child_object = params[:child]
@@ -41,6 +42,8 @@ class FormsController < ApplicationController
     @drug3 = ChildDrug.new(user_id: user_id, child_id: @child.read_attribute('id'), drug_name: drug3[:drug_name],
                            dosage: drug3[:drug_dosage], frequency: drug3[:drug_freq])
     @drug3.save
+
+    @messenger.send_reminder_initial(child_object[:childFirstName], drug1[:drug_name], drug1[:drug_dosage], child_object[:childPhone])
     render nothing: true
   end
 end
