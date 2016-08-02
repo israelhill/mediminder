@@ -19,17 +19,8 @@ class MessagesController < ApplicationController
   @dosage = 1
 
   def reply
-
-    #@drug_acet = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "breathing problems", "chest tightness, pain", "clamminess", "coughing up blood", "fever", "changes in taste", "drowsiness", "mouth sores", "nausea, vomiting", "runny nose"]
-    #@drug_gent = ["burning, stinging or irritation", "difficulty hearing or ringing in the ears", "dizziness", "increased thirst", "loss of balance", "muscle weakness", "nausea", "pain or difficulty passing urine", "blurred vision (usually temporary)"]
-    #@drug_cip = ["allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue", "blurred vision that does not go away", "temporary blurred vision", "tearing or feeling of something in the eye"]
-
-    #@drug_data = Hash["Acetylcysteine", @drug_acet, "Gentamicin", @drug_gent, "Ciprofloxacin", @drug_cip]
-
     @drug_array = get_drug_array()
-    #@drug_data.each do |key, value|
-    #  @drug_array.push key
-    #end
+
     message_body = params['Body']
     puts 'Message Body: ' + message_body
     @child_number = params['From']
@@ -57,7 +48,7 @@ class MessagesController < ApplicationController
 
   private
   def boot_twilio
-    account_sid = 'PN68e053fd7ea3756274a6ff6f0b2bfb5a'
+    account_sid = 'ACee177252e5f1e4a5c4c19b8e1e10d5d9'
     auth_token = '92760c86abd82c59035d16709b99ee8c'
     @client = Twilio::REST::Client.new account_sid, auth_token
   end
