@@ -220,7 +220,7 @@ class MessagesController < ApplicationController
   end
 
   def get_drug_array
-    data = RestClient.get('http://b74edd07.ngrok.io/')
+    data = RestClient.get('http://76870b0c.ngrok.io/all')
     parsed_data = JSON.parse data
     drugs_array = []
     parsed_data['data'].each { |drug|
@@ -247,7 +247,7 @@ class MessagesController < ApplicationController
 
   def determine_side_effects(drug)
     # cant call this when not on IBM VPN
-    url = 'http://bdf0ce88.ngrok.io/' + drug.downcase
+    url = 'http://76870b0c.ngrok.io/' + drug.downcase
     data = JSON.parse RestClient.get(url)
     side_effects_string = data['patientEducationSheets'][0]['sideEffects']
     side_effects_array = []
