@@ -48,9 +48,11 @@ class MessagesController < ApplicationController
   end
 
   def send_reminder_initial(name, drug, dosage, phone)
-    @client.account.messages.create({ :from => FROM_NUMBER,
+    puts 'Made it to initial message method!************************'
+    boot_twilio
+    sms = @client.account.messages.create({ :from => FROM_NUMBER,
                                       :to => phone,
-                                      :body => 'Hey %s! This is a Mediminder that you need to take your %s medication. Please take your usual %d pills in the next few minutes and send us a response when you do. Have a great day!' % [name, drug, dosage]})
+                                      :body => 'Hey %s! This is a Mediminder that you need to take your %s medication. Please take your usual %s pills in the next few minutes and send us a response when you do. Have a great day!' % [name, drug, dosage]})
   end
 
   private
